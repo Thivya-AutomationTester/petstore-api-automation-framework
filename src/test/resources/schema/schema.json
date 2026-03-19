@@ -1,0 +1,46 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "photoUrls", "status"],
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "photoUrls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name"]
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer" },
+            "name": { "type": "string" }
+          }
+        }
+      },
+      "status": {
+        "type": "string"
+      }
+    }
+  }
+}

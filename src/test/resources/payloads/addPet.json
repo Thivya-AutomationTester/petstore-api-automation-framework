@@ -1,0 +1,19 @@
+{
+
+  "category": {
+    "id": 1,
+    "name": "{{name}}"
+  },
+  "name": "cat",
+  "photoUrls": [
+    "http://google.com/cats"
+  ],
+  "tags": [
+    {
+      "id": 12,
+      "name": "petCategory"
+    }
+  ],
+  "status": "{{status}}"
+
+}

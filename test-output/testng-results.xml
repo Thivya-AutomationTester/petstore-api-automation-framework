@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="7" passed="7" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-03-19T13:05:03 CET" name="Suite" finished-at="2026-03-19T13:05:13 CET" duration-ms="10667">
+    <groups>
+    </groups>
+    <test started-at="2026-03-19T13:05:03 CET" name="Test" finished-at="2026-03-19T13:05:13 CET" duration-ms="10667">
+      <class name="testscripts.PetNegativeTests">
+        <test-method is-config="true" signature="setup()[pri:0, instance:testscripts.PetNegativeTests@6f53b8a]" started-at="2026-03-19T13:05:03 CET" name="setup" finished-at="2026-03-19T13:05:03 CET" duration-ms="511" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="createPetWithInvalidPayload()[pri:0, instance:testscripts.PetNegativeTests@6f53b8a]" started-at="2026-03-19T13:05:03 CET" name="createPetWithInvalidPayload" finished-at="2026-03-19T13:05:05 CET" duration-ms="1665" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createPetWithInvalidPayload -->
+        <test-method signature="deleteNonExistingPet()[pri:0, instance:testscripts.PetNegativeTests@6f53b8a]" started-at="2026-03-19T13:05:05 CET" name="deleteNonExistingPet" finished-at="2026-03-19T13:05:06 CET" duration-ms="818" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteNonExistingPet -->
+        <test-method signature="getPetWithInvalidId()[pri:0, instance:testscripts.PetNegativeTests@6f53b8a]" started-at="2026-03-19T13:05:06 CET" name="getPetWithInvalidId" finished-at="2026-03-19T13:05:07 CET" duration-ms="781" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getPetWithInvalidId -->
+      </class> <!-- testscripts.PetNegativeTests -->
+      <class name="testscripts.PetTests">
+        <test-method is-config="true" signature="setup()[pri:0, instance:testscripts.PetTests@673fdbce]" started-at="2026-03-19T13:05:03 CET" name="setup" finished-at="2026-03-19T13:05:03 CET" duration-ms="511" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="createPet()[pri:0, instance:testscripts.PetTests@673fdbce]" started-at="2026-03-19T13:05:03 CET" name="createPet" finished-at="2026-03-19T13:05:07 CET" duration-ms="3410" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createPet -->
+        <test-method signature="deletePet()[pri:0, instance:testscripts.PetTests@673fdbce]" started-at="2026-03-19T13:05:07 CET" name="deletePet" finished-at="2026-03-19T13:05:09 CET" duration-ms="2249" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deletePet -->
+        <test-method signature="getPetByStatus(java.lang.String)[pri:0, instance:testscripts.PetTests@673fdbce]" started-at="2026-03-19T13:05:09 CET" name="getPetByStatus" data-provider="statusProvider" finished-at="2026-03-19T13:05:10 CET" duration-ms="1410" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[pending]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getPetByStatus -->
+        <test-method signature="updatePet()[pri:0, instance:testscripts.PetTests@673fdbce]" started-at="2026-03-19T13:05:10 CET" name="updatePet" finished-at="2026-03-19T13:05:13 CET" duration-ms="3031" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updatePet -->
+      </class> <!-- testscripts.PetTests -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
+</testng-results>
