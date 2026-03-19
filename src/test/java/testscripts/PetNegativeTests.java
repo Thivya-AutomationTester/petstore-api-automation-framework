@@ -11,37 +11,35 @@ import utils.DataGenerator;
 
 public class PetNegativeTests extends BaseTest {
 
-	// Get pet with invalid ID
+	
 	@Test
 	public void getPetWithInvalidId() {
+		
+		// Get pet with invalid ID
 		long invalidId = DataGenerator.getInvalidId();
-
-		Response response = PetClient.getPetByIdResponse(requestSpec, invalidId);
-
+		Response response = PetClient.getPetById(requestSpec,invalidId);
+		//AssertResponse
 		Assert.assertEquals(response.getStatusCode(), 404, "Expected 404 for invalid pet ID");
 	}
 
-	// Create pet with invalid payload
+	
 	@Test
 	public void createPetWithInvalidPayload() {
-		// String invalidPayload = ReusableMethods.getInvalidPetPayload();
-		String invalidPayload = PayloadManager.getInvalidPetPayload()
-				.replace("{{invalidName}}", DataGenerator.getRandomName())
-				.replace("{{invalidId}}", DataGenerator.getInvalidIdAsString());
-		Response response = PetClient.createPet(requestSpec, invalidPayload);
-	
-		Assert.assertTrue(response.getStatusCode() >= 400, "Expected error status code for invalid payload");
+		// Create pet with invalid payload
+		String payload = ReusableMethods.getAddPayload(DataGenerator.getRandomId(),DataGenerator.getRandomName(),DataGenerator.getRandomStatus().name(),true);
+		Response response = PetClient.createPet(requestSpec,payload);
+		//AssertResponse
+		Assert.assertTrue(response.getStatusCode() >= 400, "Unexpected status code  for invalid payload");
 	}
 
-	// Delete non-existing pet
+	
 	@Test
 	public void deleteNonExistingPet() {
-
+		// Delete non-existing pet
 		long invalidId = DataGenerator.getInvalidId();
-
-		Response response = PetClient.deletePetById(requestSpec, invalidId);
-
-		Assert.assertTrue(response.getStatusCode() == 404, "Unexpected status code for deleting non-existing pet");
+		Response response = PetClient.deletePetById(requestSpec,invalidId);
+		//AssertResponse
+		Assert.assertEquals(response.getStatusCode(),404, "Unexpected status code for deleting non-existing pet");
 	}
 
 }

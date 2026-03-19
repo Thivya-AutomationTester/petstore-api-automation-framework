@@ -1,43 +1,43 @@
 package helpers;
 
+import static io.restassured.RestAssured.given;
+
+import enums.EndPoints;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import pojo.Pet;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.everyItem;
-
+// Helper class to perform all pet API requests
 public class PetClient {
 
-	public static Response createPet(RequestSpecification spec, String body) {
-		return given().body(body).when().post("/pet").then().extract().response();
+	// POST
+	public static Response createPet(RequestSpecification spec,String body) {
+		return given().spec(spec).body(body).when().post(EndPoints.PET.getPath()).then().extract().response();
 	}
 
-	public static Pet getPetById(RequestSpecification spec, long id) {
+	// GET - findById
+	public static Response getPetById(RequestSpecification spec,long id) {
 
-		return given().pathParam("petid", id).when().get("/pet/{petid}").then().extract().as(Pet.class);
+		return given().spec(spec).pathParam("petid", id).when().get(EndPoints.PET_BY_ID.getPath()).then().extract().response();
 	}
 
-	public static Response getPetByIdResponse(RequestSpecification spec, long id) {
+	// PUT
+	public static Response updatePet(RequestSpecification spec,String body) {
 
-		return given().pathParam("petid", id).when().get("/pet/{petid}").then().extract().response();
+		return given().spec(spec).body(body).when().put(EndPoints.PET.getPath()).then().extract().response();
 	}
 
-	public static Response updatePet(RequestSpecification spec, String body) {
+	// DELETE
+	public static Response deletePetById(RequestSpecification spec,long id) {
 
-		return given().body(body).when().put("/pet").then().extract().response();
-	}
-
-	public static Response deletePetById(RequestSpecification spec, long id) {
-
-		return given().pathParam("petid", id).when().delete("/pet/{petid}").then().extract().response();
+		return given().spec(spec).pathParam("petid", id).when().delete(EndPoints.PET_BY_ID.getPath()).then().extract().response();
 
 	}
 
-	public static Response getPetsByStatus(RequestSpecification spec, String status) {
+	// GET - findByStatus
+	public static Response getPetsByStatus(RequestSpecification spec,String status) {
 
-		return given().queryParam("status", status).when().get("/pet/findByStatus").then().statusCode(200)
-				.body("status", everyItem(equalTo(status))).extract().response();
+		return given().spec(spec).queryParam("status", status).when().get(EndPoints.FIND_BY_STATUS.getPath()).then().extract().response();
 	}
+
+	
 }

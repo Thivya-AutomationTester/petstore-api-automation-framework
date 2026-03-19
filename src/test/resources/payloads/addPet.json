@@ -1,12 +1,14 @@
 {
 
   "category": {
-    "id": 1,
-    "name": "{{name}}"
+    "id": {{categoryId}},
+    "name": "Domestic"
   },
-  "name": "cat",
+  "name": "{{name}}",
   "photoUrls": [
-    "http://google.com/cats"
+    "http://google.com/cats",
+	"http://google.com/rat",
+	"http://google.com/dogs"
   ],
   "tags": [
     {

@@ -2,14 +2,17 @@ package helpers;
 
 import org.testng.Assert;
 
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import pojo.Pet;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+//Helper class to validate API responses
+
 public class PetValidator {
 
+	// Validate that actual pet matches expected pet
+	
 	public static void validateResponse(Pet actual, Pet expected) {
 
 		Assert.assertEquals(actual.getId(), expected.getId());
@@ -30,12 +33,10 @@ public class PetValidator {
 		}
 	}
 
+	
+	// Validate response against JSON schema
     public static void validateSchema(Response response, String schemaFile) {
         response.then().body(matchesJsonSchemaInClasspath(schemaFile));
     }
-    public static String getStatus(String response) {
-		JsonPath js = new JsonPath(response);
-		return js.getString("status");
-	}
     
 }

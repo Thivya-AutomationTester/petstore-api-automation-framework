@@ -3,6 +3,7 @@ package helpers;
 import utils.ConfigReader;
 import utils.FileUtils;
 
+//Reads JSON payloads from resources
 public class PayloadManager {
 
     public static String getAddPetPayload() {
@@ -15,8 +16,5 @@ public class PayloadManager {
                 ConfigReader.get("update.pet.payload"));
     }
 
-    public static String getInvalidPetPayload() {
-        return FileUtils.readFromResources(
-                ConfigReader.get("invalid.pet.payload"));
-    }
+   
 }

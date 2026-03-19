@@ -3,8 +3,8 @@
 <suite name="Suite">
   <test thread-count="5" name="Test" parallel="classes">
     <classes>
-      <class name="testscripts.PetNegativeTests"/>
-      <class name="testscripts.PetTests"/>
+    <class name="testscripts.PetTests"/>
+     <class name="testscripts.PetNegativeTests"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

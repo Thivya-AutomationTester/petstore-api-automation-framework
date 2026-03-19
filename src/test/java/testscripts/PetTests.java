@@ -1,6 +1,8 @@
 package testscripts;
 
-import org.testng.Assert;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.everyItem;
+
 import org.testng.annotations.Test;
 
 import base.BaseTest;
@@ -11,93 +13,85 @@ import pojo.Pet;
 import utils.DataGenerator;
 
 public class PetTests extends BaseTest {
+
 	
+	private Response response;
+	private String payload = ReusableMethods.getAddPayload(DataGenerator.getRandomId(),
+			DataGenerator.getRandomName(),DataGenerator.getRandomStatus().name(),false);
+
+
 
 	@Test
 	public void createPet() {
 
-		String payload = PayloadManager.getAddPetPayload().replace("{{name}}", DataGenerator.getRandomName())
-				.replace("{{status}}", DataGenerator.getRandomStatus().name());
+		// post:: Create a new pet using the /pet POST endpoint
+		response = PetClient.createPet(requestSpec,payload);
 
-		// post:: new pet created and validated the response code
-		Pet expectedPet = PetClient.createPet(requestSpec, payload).as(Pet.class);
+		// Validate the response
+		response.then().statusCode(200);
 
-		long id = expectedPet.getId();
-		System.out.println("*********add done***************************");
-		// Get:: retrieved the createdPet using petid
+		// Get::Retrieve the created pet using the /pet/{petId} GET endpoint
+		Pet expectedPet = response.as(Pet.class);
+		 long id = expectedPet.getId();
+		 createdPetIds.add(id);
+		
+		Response res = PetClient.getPetById(requestSpec,id);
+		Pet actualPet =res.as(Pet.class);
 
-		Pet actualPet = PetClient.getPetById(requestSpec, id);
-		System.out.println("************retrieval done************************");
-		// Asserting if the retrieved pet matches the details of the created pet
+		// Assert that the retrieved pet matches the details of the created pet
 		PetValidator.validateResponse(actualPet, expectedPet);
-		System.out.println("************validation done************************");
-
-		// delete pet(cleanup)
-		PetClient.deletePetById(requestSpec, id);
-		System.out.println("************cleanup done************************");
 
 	}
 
 	@Test
 	public void updatePet() {
 
-		// Create first
-		String createPayload = PayloadManager.getAddPetPayload()
-				.replace("{{name}}", DataGenerator.getRandomName())
-				.replace("{{status}}", DataGenerator.getRandomStatus().name());
-
-		Pet created = PetClient.createPet(requestSpec, createPayload).as(Pet.class);
-
-		long id = created.getId();
-		System.out.println(id);
-		System.out.println("*********add done***************************");
-
-		// put:: update the pet
-	
+		//Create Pet
+		 long id = ReusableMethods.createPetAndGetId(requestSpec,createdPetIds,payload);
+				
+		// put:: Update an existing pet using the /pet PUT endpoint
 		String updatedBody = PayloadManager.getUpdatePetPayload().replace("{{id}}", String.valueOf(id));
-		Pet updatedPet = PetClient.updatePet(requestSpec, updatedBody).as(Pet.class);
-		System.out.println("***********update done*************************");
-		// Get:: retrieve the updatedPet and check response
-		Pet actualAfterUpdate = PetClient.getPetById(requestSpec, id);
-		System.out.println("************retrieval done************************");
-		// validate response
+		response = PetClient.updatePet(requestSpec,updatedBody);
+
+		// Validate the response
+		response.then().assertThat().statusCode(200);
+
+		// Get:: Retrieve the pet to verify that the updates have been applied correctly
+		Pet updatedPet = response.as(Pet.class);
+		Response res = PetClient.getPetById(requestSpec,id);
+		Pet actualAfterUpdate =res.as(Pet.class);
+		
 		PetValidator.validateResponse(actualAfterUpdate, updatedPet);
-		System.out.println("************validation done************************");
-		// delete pet(cleanup)
-		PetClient.deletePetById(requestSpec, id);
-		System.out.println("**************clean up done**********************");
+
 	}
 
 	@Test(dataProvider = "statusProvider")
 	public void getPetByStatus(String status) {
 
-	
-		// check if all returned pets have the requested status and assert the schema
-		Response response = PetClient.getPetsByStatus(requestSpec, status);
-		System.out.println("************retrieval done************************");
-		// Schema validation
+		// Query the /pet/findByStatus GET endpoint with different statuses
+		Response response = PetClient.getPetsByStatus(requestSpec,status);
+		response.then().assertThat().statusCode(200);
+
+		// Validate that the response contains only pets with the requested status
+		response.then().assertThat().body("status", everyItem(equalTo(status)));
+
+		// Assert the response schema matches the expected structure.
 		PetValidator.validateSchema(response, "schema/schema.json");
-		System.out.println("************validation done************************");
+
 	}
 
 	@Test
 	public void deletePet() {
-		// Create first
-		String createPayload = PayloadManager.getAddPetPayload()
-				.replace("{{name}}", DataGenerator.getRandomName())
-				.replace("{{status}}", DataGenerator.getRandomStatus().name());
+		//Create Pet
+		 long id = ReusableMethods.createPetAndGetId(requestSpec,createdPetIds,payload);
+				
+		// Delete a pet using the /pet/{petId} DELETE endpoint
+		PetClient.deletePetById(requestSpec,id);
+		createdPetIds.remove(id);
 
-		Pet created = PetClient.createPet(requestSpec, createPayload).as(Pet.class);
-
-		long id = created.getId();
-		System.out.println("************add done************************");
-		// deletePet
-		PetClient.deletePetById(requestSpec, id);
-		System.out.println("************delete done************************");
-		// validated after deleting
-		Response response = PetClient.getPetByIdResponse(requestSpec, id);
-		Assert.assertEquals(response.getStatusCode(), 404);
-		System.out.println("************validation done************************");
+		// validate the response
+		Response response = PetClient.getPetById(requestSpec,id);
+		response.then().assertThat().statusCode(404).body("message",equalTo("Pet not found"));
 
 	}
 

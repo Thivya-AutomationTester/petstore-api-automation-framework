@@ -1,1 +1,21 @@
+# Maven target folder
 /target/
+
+# TestNG generated reports
+/test-output/
+
+# Logs folder for request/response logs
+/logs/
+
+# Eclipse project files
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp

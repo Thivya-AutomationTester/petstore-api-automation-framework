@@ -2,8 +2,11 @@ package utils;
 
 import java.io.InputStream;
 
-public class FileUtils {
 
+// Utility to read files from resources folder
+
+public class FileUtils {
+	
     public static String readFromResources(String filePath) {
 
         try (InputStream is = 
@@ -19,4 +22,6 @@ public class FileUtils {
             throw new RuntimeException("Error reading file: " + filePath, e);
         }
     }
+    
+   
 }

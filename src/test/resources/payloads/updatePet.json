@@ -2,11 +2,11 @@
 "id": "{{id}}",
   "category": {
     "id": 2,
-    "name": "{{name}}"
+    "name": "Wild"
   },
-  "name": "cat",
+  "name": "Lion",
   "photoUrls": [
-    "http://google.com/cats1"
+    "http://google.com/lion"
   ],
   "tags": [
     {
@@ -14,6 +14,6 @@
       "name": "petCategory"
     }
   ],
-  "status": "{{status}}"
+  "status": "sold"
 
 }
