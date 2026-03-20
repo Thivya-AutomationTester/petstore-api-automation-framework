@@ -2,6 +2,14 @@ package pojo;
 
 import java.util.List;
 
+/**
+ * A class representing a pet in the Petstore API.
+ * <p>
+ * This class contains the details about a pet, including its unique ID, name, status, 
+ * associated category, list of photo URLs, and associated tags.
+ * </p>
+ */
+
 public class Pet {
 
     private long id;

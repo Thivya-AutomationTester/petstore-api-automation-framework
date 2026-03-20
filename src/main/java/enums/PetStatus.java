@@ -1,10 +1,13 @@
 package enums;
 
-public enum PetStatus {
-		
-	//possible statuses of a pet in the Petstore API
-	  pending,
-	  available,
-	  sold
-}
+/** Enumeration of possible statuses for a pet in the Petstore API. */
 
+public enum PetStatus {
+
+	/** Pet is pending */
+	pending,
+	/** Pet is available */
+	available,
+	/** Pet has been sold */
+	sold
+}
