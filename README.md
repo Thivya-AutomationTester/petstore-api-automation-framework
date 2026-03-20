@@ -15,8 +15,8 @@ Before running the tests, you need:
 - Maven 3.6 or higher
 - Internet access to call the live Petstore API
 ### Check your setup using commands:
-java -version
-mvn -version
+- java -version
+- mvn -version
 ### Setup
 1. Clone the repository
 git clone <REPO_URL>
@@ -65,6 +65,6 @@ After running tests:
 - Retry Mechanism: Handles transient failures using a simple retry analyzer.
 - Automatic Cleanup: Pets created during tests are automatically deleted after execution.
 ### Notes
-TestNG groups are not implemented but can be added if needed.
-Framework can be extended to include parallel execution, additional endpoints, or reporting enhancements.
+- TestNG groups are not implemented but can be added if needed.
+- Framework can be extended to include parallel execution, additional endpoints, or reporting enhancements.
 
