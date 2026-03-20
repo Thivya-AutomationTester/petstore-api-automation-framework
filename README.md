@@ -28,14 +28,16 @@ All environment settings are in src/test/resources/config/config.properties.
 - Payload templates are in src/test/resources/payloads
 - JSON schema files are in src/test/resources/schema.
 ### Project Structure
-src/main/java/enums        # Endpoints, statuses and HTTP codes
-src/main/java/helpers      # API clients, validators, reusable methods
-src/main/java/pojo         # Pet, Category, Tag classes
+````
+src/main/java/enums         # Endpoints, statuses and HTTP codes
+src/main/java/helpers       # API clients, validators, reusable methods
+src/main/java/pojo          # Pet, Category, Tag classes
 src/main/java/utils         # Config, data generation, file utils, retry logic
 src/test/java/base          # BaseTest with request setup, logging and cleanup
 src/test/java/testscripts   # Positive & negative test classes
 src/test/resources          # Config files, payloads, schemas
-logs/                             # Request & response logs per test class
+logs/                       # Request & response logs per test class
+````
 ### Test Flow
 - Tests generate dynamic data for pets (IDs, names, statuses).
 - Perform API operations (POST, GET, PUT, DELETE).
@@ -56,12 +58,12 @@ After running tests:
 - Detailed request/response logs for each test class are in logs/logging_<TestClassName>.txt.
 - Useful for debugging or inspecting API calls.
 ### Framework Highlights
-Reusable Methods: Centralized functions for create, update, delete and validation operations.
-Dynamic Data Generation: Random IDs, names and statuses ensure independent test runs.
-Schema Validation: Responses are validated against JSON schemas to catch structural issues.
-Negative Testing: Invalid payloads, non-existing pet IDs and other negative scenarios are tested.
-Retry Mechanism: Handles transient failures using a simple retry analyzer.
-Automatic Cleanup: Pets created during tests are automatically deleted after execution.
+- Reusable Methods: Centralized functions for create, update, delete and validation operations.
+- Dynamic Data Generation: Random IDs, names and statuses ensure independent test runs.
+- Schema Validation: Responses are validated against JSON schemas to catch structural issues.
+- Negative Testing: Invalid payloads, non-existing pet IDs and other negative scenarios are tested.
+- Retry Mechanism: Handles transient failures using a simple retry analyzer.
+- Automatic Cleanup: Pets created during tests are automatically deleted after execution.
 ### Notes
 TestNG groups are not implemented but can be added if needed.
 Framework can be extended to include parallel execution, additional endpoints, or reporting enhancements.
