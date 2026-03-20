@@ -22,7 +22,7 @@ import utils.ConfigReader;
 public class BaseTest {
 
 	protected RequestSpecification requestSpec;
-	protected List<Long> createdPetIds = new ArrayList<>();
+	protected List<Long> createdPetIds = Collections.synchronizedList(new ArrayList<>());
 
 	@BeforeClass
 	public void setup() throws FileNotFoundException {
@@ -66,7 +66,7 @@ public class BaseTest {
 				try {
 					PetClient.deletePetById(requestSpec, petId);
 				} catch (Exception e) {
-
+					System.out.println("Cleanup failed for ID: " + petId);
 				}
 			}
 			createdPetIds.clear();

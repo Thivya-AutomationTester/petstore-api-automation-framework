@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Random;
+import java.util.UUID;
 
 import enums.PetStatus;
 
@@ -12,7 +13,7 @@ public class DataGenerator {
 
 	// Generate a unique pet name
 	public static String getRandomName() {
-		return "pet_" + System.currentTimeMillis();
+		return "pet_" + Math.abs(UUID.randomUUID().getMostSignificantBits());
 	}
 
 	 // Randomly selects a valid pet status from the PetStatus enum
@@ -22,7 +23,7 @@ public class DataGenerator {
 
 	// Generate a unique ID
 	public static long getRandomId() {
-		return System.currentTimeMillis();
+		 return Math.abs(UUID.randomUUID().getMostSignificantBits());
 	}
 
 	// Invalid ID for negative tests

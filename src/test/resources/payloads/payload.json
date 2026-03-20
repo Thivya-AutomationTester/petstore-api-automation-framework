@@ -12,7 +12,7 @@
   ],
   "tags": [
     {
-      "id": 12,
+      "id": {{tagId}},
       "name": "petCategory"
     }
   ],

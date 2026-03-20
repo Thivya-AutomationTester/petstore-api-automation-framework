@@ -7,12 +7,16 @@ import pojo.Pet;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 //Helper class to validate API responses
 
 public class PetValidator {
 
 	// Validate that actual pet matches expected pet
-	
+
 	public static void validateResponse(Pet actual, Pet expected) {
 
 		Assert.assertEquals(actual.getId(), expected.getId());
@@ -33,10 +37,28 @@ public class PetValidator {
 		}
 	}
 
-	
+	// Returns a list of pets that are missing "name" or "photoUrls".
+	public static List<Map<String, Object>> getPetsMissingNameOrPhotoUrls(Response response) {
+		List<Map<String, Object>> pets = response.jsonPath().getList("");
+		List<Map<String, Object>> missingPets = new ArrayList<>();
+		 int index = 0;
+
+		for (Map<String, Object> pet : pets) {
+			if (!pet.containsKey("name") || !pet.containsKey("photoUrls")) {
+				  System.out.println("Warning: Pet at index " + index + " is missing 'name' or 'photoUrls': " + pet);
+
+				missingPets.add(pet);
+			}
+			 index++;
+
+		}
+
+		return missingPets;
+	}
+
 	// Validate response against JSON schema
-    public static void validateSchema(Response response, String schemaFile) {
-        response.then().body(matchesJsonSchemaInClasspath(schemaFile));
-    }
-    
+	public static void validateSchema(Response response, String schemaFile) {
+		response.then().body(matchesJsonSchemaInClasspath(schemaFile));
+	}
+
 }

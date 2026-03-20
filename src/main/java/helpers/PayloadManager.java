@@ -8,13 +8,8 @@ public class PayloadManager {
 
     public static String getAddPetPayload() {
         return FileUtils.readFromResources(
-                ConfigReader.get("add.pet.payload"));
+                ConfigReader.get("payloads.pet.payload"));
     }
 
-    public static String getUpdatePetPayload() {
-        return FileUtils.readFromResources(
-                ConfigReader.get("update.pet.payload"));
-    }
-
-   
+     
 }
