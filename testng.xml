@@ -2,7 +2,7 @@
   <listeners>
         <listener class-name="listeners.ExtentListener"/>
     </listeners>
-  <test thread-count="5" name="Test" parallel="classes">
+  <test thread-count="5" name="Test">
     <classes>
     <class name="testscripts.PetTests"/>
      <class name="testscripts.PetNegativeTests"/>
