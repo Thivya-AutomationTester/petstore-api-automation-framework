@@ -25,6 +25,10 @@ public class PayloadManager {
         return FileUtils.readFromResources(
                 ConfigReader.get("payloads.pet.payload"));
     }
+    public static String getschemaPayload() {
+        return FileUtils.readFromResources(
+                ConfigReader.get("schema.pet.getSchema"));
+    }
 
      
 }

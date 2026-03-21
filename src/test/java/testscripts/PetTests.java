@@ -134,7 +134,7 @@ public class PetTests extends BaseTest {
 		Assert.assertTrue(missingPets.isEmpty(), "Some pets are missing 'name' or 'photoUrls': " + missingPets);
 
 		// Validate response schema against the expected JSON schema
-		PetValidator.validateSchema(response, "schema/schema.json");
+		PetValidator.validateSchema(response, ConfigReader.get("schema.pet.getSchema"));
 
 	}
 
