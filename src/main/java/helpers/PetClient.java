@@ -15,28 +15,28 @@ import listeners.ExtentListener;
 import pojo.Pet;
 import reports.ExtentLogger;
 
-
 /**
  * Client for interacting with the Pet API endpoints.
  * <p>
- * Provides methods for common HTTP operations (POST, GET, PUT, DELETE)
- * to create, update, delete, and fetch pet information in the Petstore API.
+ * Provides methods for common HTTP operations (POST, GET, PUT, DELETE) to
+ * create, update, delete, and fetch pet information in the Petstore API.
  * </p>
  */
 
 public class PetClient {
 
-	 /**
-     * Generic method to log the request and response details to ExtentReports.
-     *
-     * @param test      the ExtentTest instance for logging
-     * @param method    the HTTP method (e.g., "GET", "POST")
-     * @param endpoint  the API endpoint
-     * @param body      the body of the request (as a String)
-     * @param response  the response received from the API
-     */
+	/**
+	 * Generic method to log the request and response details to ExtentReports.
+	 *
+	 * @param test     the ExtentTest instance for logging
+	 * @param method   the HTTP method (e.g., "GET", "POST")
+	 * @param endpoint the API endpoint
+	 * @param body     the body of the request (as a String)
+	 * @param response the response received from the API
+	 */
 	private static void logRequestAndResponse(ExtentTest test, String method, String endpoint, String body,
 			Response response) {
+
 		// Log request to ExtentReports
 		ExtentLogger.logRequest(test, method, endpoint, body);
 
@@ -45,13 +45,13 @@ public class PetClient {
 	}
 
 	/**
-     * POST - Creates a new pet in the Petstore.
-     *
-     * @param requestSpec the ThreadLocal holding the request specification
-     * @param body        the pet object to be added
-     * @param authType    the authentication type (e.g., API_KEY, BEARER)
-     * @return the response from the API
-     */
+	 * POST - Creates a new pet in the Petstore.
+	 *
+	 * @param requestSpec the ThreadLocal holding the request specification
+	 * @param body        the pet object to be added
+	 * @param authType    the authentication type (e.g., API_KEY, BEARER)
+	 * @return the response from the API
+	 */
 	public static Response createPet(ThreadLocal<RequestSpecification> requestSpec, Pet body, AuthType authType) {
 		RequestSpecification request = AuthManager.applyAuth(requestSpec, authType);
 
@@ -67,38 +67,42 @@ public class PetClient {
 		return response;
 	}
 
-	 /**
-     * GET - Retrieves a pet by its ID.
-     *
-     * @param requestSpec the ThreadLocal holding the request specification
-     * @param id          the ID of the pet to fetch
-     * @param authType    the authentication type (e.g., API_KEY, BEARER)
-     * @return the response from the API
-     */
+	/**
+	 * GET - Retrieves a pet by its ID.
+	 *
+	 * @param requestSpec the ThreadLocal holding the request specification
+	 * @param id          the ID of the pet to fetch
+	 * @param authType    the authentication type (e.g., API_KEY, BEARER)
+	 * @return the response from the API
+	 */
 	public static Response getPetById(ThreadLocal<RequestSpecification> requestSpec, long id, AuthType authType) {
 		RequestSpecification request = AuthManager.applyAuth(requestSpec, authType);
 
 		// No body for GET request
-		String bodyAsString = ""; 
+		String bodyAsString = "";
 
 		// Send request
 		Response response = given().spec(request).pathParam("petid", id).when().get(EndPoints.PET_BY_ID.getPath())
 				.then().extract().response();
 
+		// Resolve path param using ReusableMethods to get full endpoint with actual pet
+		// ID
+		String resolvedEndpoint = PetFactory.resolve(EndPoints.PET_BY_ID.getPath(), "petid", id);
+
 		// Log request and response
-		logRequestAndResponse(ExtentListener.testThread.get(), "GET", EndPoints.PET_BY_ID.getPath(), bodyAsString, response);
+		logRequestAndResponse(ExtentListener.testThread.get(), "GET", resolvedEndpoint, bodyAsString, response);
 
 		return response;
 	}
 
-	  /**
-     * PUT - Updates an existing pet.
-     *
-     * @param requestSpec the ThreadLocal holding the request specification
-     * @param body        the updated pet object
-     * @param authType    the authentication type (e.g., API_KEY, BEARER)
-     * @return the response from the API
-     */
+	/**
+	 * PUT - Updates an existing pet.
+	 *
+	 * @param requestSpec the ThreadLocal holding the request specification
+	 * @param body        the updated pet object
+	 * @param authType    the authentication type (e.g., API_KEY, BEARER)
+	 * @return the response from the API
+	 */
 	public static Response updatePet(ThreadLocal<RequestSpecification> requestSpec, Pet body, AuthType authType) {
 		RequestSpecification request = AuthManager.applyAuth(requestSpec, authType);
 
@@ -114,45 +118,48 @@ public class PetClient {
 		return response;
 	}
 
-    /**
-     * DELETE-Deletes a pet by its ID.
-     *
-     * @param requestSpec the ThreadLocal holding the request specification
-     * @param id          the ID of the pet to delete
-     * @param authType    the authentication type (e.g., API_KEY, BEARER)
-     * @return the response from the API
-     */
+	/**
+	 * DELETE-Deletes a pet by its ID.
+	 *
+	 * @param requestSpec the ThreadLocal holding the request specification
+	 * @param id          the ID of the pet to delete
+	 * @param authType    the authentication type (e.g., API_KEY, BEARER)
+	 * @return the response from the API
+	 */
 	public static Response deletePetById(ThreadLocal<RequestSpecification> requestSpec, long id, AuthType authType) {
 		RequestSpecification request = AuthManager.applyAuth(requestSpec, authType);
 
 		// No body for DELETE request
-		String bodyAsString = ""; 
+		String bodyAsString = "";
 
 		// Send request
 		Response response = given().spec(request).pathParam("petid", id).when().delete(EndPoints.PET_BY_ID.getPath())
 				.then().extract().response();
 
+		// Resolve path param using ReusableMethods to get full endpoint with actual pet
+		// ID
+		String resolvedEndpoint = PetFactory.resolve(EndPoints.PET_BY_ID.getPath(), "petid", id);
+
 		// Log request and response
-		logRequestAndResponse(ExtentListener.testThread.get(), "DELETE", EndPoints.PET_BY_ID.getPath(), bodyAsString,
-				response);
+		logRequestAndResponse(ExtentListener.testThread.get(), "DELETE", resolvedEndpoint, bodyAsString, response);
 
 		return response;
 	}
 
 	/**
-     * GET- Finds pets by their status.
-     *
-     * @param requestSpec the ThreadLocal holding the request specification
-     * @param status      the status of the pets to retrieve (e.g., "available")
-     * @param authType    the authentication type (e.g., API_KEY, BEARER)
-     * @return the response from the API
-     */
+	 * GET- Finds pets by their status.
+	 *
+	 * @param requestSpec the ThreadLocal holding the request specification
+	 * @param status      the status of the pets to retrieve (e.g., "available")
+	 * @param authType    the authentication type (e.g., API_KEY, BEARER)
+	 * @return the response from the API
+	 */
 	public static Response getPetsByStatus(ThreadLocal<RequestSpecification> requestSpec, String status,
 			AuthType authType) {
 		RequestSpecification request = AuthManager.applyAuth(requestSpec, authType);
 
 		// No body for GET request
-		String bodyAsString = ""; 
+		String bodyAsString = "";
 
 		// Send request
 		Response response = given().spec(request).queryParam("status", status).when()
@@ -166,13 +173,13 @@ public class PetClient {
 	}
 
 	/**
-     * Creates a new pet from a JSON string.
-     *
-     * @param requestSpec the ThreadLocal holding the request specification
-     * @param body        the JSON string representing the pet
-     * @param authType    the authentication type (e.g., API_KEY, BEARER)
-     * @return the response from the API
-     */
+	 * Creates a new pet from a JSON string.
+	 *
+	 * @param requestSpec the ThreadLocal holding the request specification
+	 * @param body        the JSON string representing the pet
+	 * @param authType    the authentication type (e.g., API_KEY, BEARER)
+	 * @return the response from the API
+	 */
 	public static Response createPetFromJson(ThreadLocal<RequestSpecification> requestSpec, String body,
 			AuthType authType) {
 		RequestSpecification request = AuthManager.applyAuth(requestSpec, authType);
@@ -187,12 +194,12 @@ public class PetClient {
 		return response;
 	}
 
-	  /**
-     * Serializes the Pet object to a JSON string.
-     *
-     * @param body the Pet object to serialize
-     * @return the serialized JSON string
-     */
+	/**
+	 * Serializes the Pet object to a JSON string.
+	 *
+	 * @param body the Pet object to serialize
+	 * @return the serialized JSON string
+	 */
 	private static String serializeBody(Pet body) {
 		String bodyAsString = "";
 		try {

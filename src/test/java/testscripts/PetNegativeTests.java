@@ -62,7 +62,7 @@ public class PetNegativeTests extends BaseTest {
 		String status = DataGenerator.getRandomStatus().name();
 
 		// Get the invalid payload using the helper method
-		String payload = ReusableMethods.getInvalidAddPayload(categoryId, tagId, name, status);
+		String payload = PetFactory.getInvalidAddPayload(categoryId, tagId, name, status);
 
 		// Send request to create pet with invalid payload
 		Response response = PetClient.createPetFromJson(requestSpec, payload, AuthType.NONE);

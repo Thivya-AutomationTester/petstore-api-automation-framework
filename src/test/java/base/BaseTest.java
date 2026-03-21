@@ -27,7 +27,7 @@ import utils.ConfigReader;
  * managing resources like created pets.
  * </p>
  */
-
+@Listeners(listeners.ExtentListener.class)
 public class BaseTest {
 	/** ThreadLocal variable to hold request specifications for each thread. */
 	protected ThreadLocal<RequestSpecification> requestSpec = new ThreadLocal<>();

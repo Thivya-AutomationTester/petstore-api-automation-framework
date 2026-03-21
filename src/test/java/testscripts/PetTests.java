@@ -46,7 +46,7 @@ public class PetTests extends BaseTest {
 		String name = DataGenerator.getRandomName();
 		String status = DataGenerator.getRandomStatus().name();
 
-		Pet pet = ReusableMethods.createPetObject(categoryId, tagId, name, status);
+		Pet pet = PetFactory.createPetObject(categoryId, tagId, name, status);
 		Response response = PetClient.createPet(requestSpec, pet, AuthType.NONE);
 
 		// Validate the response
@@ -78,7 +78,7 @@ public class PetTests extends BaseTest {
 	public void updatePet() {
 
 		// Post:: Create a new pet using the /pet POST endpoint
-		long id = ReusableMethods.createPetAndGetId(requestSpec, createdPetIds);
+		long id = PetFactory.createPetAndGetId(requestSpec, createdPetIds);
 
 		// put: Update the created pet's details
 		long categoryId = DataGenerator.getRandomId();
@@ -86,7 +86,7 @@ public class PetTests extends BaseTest {
 		String name = DataGenerator.getRandomName();
 		String status = DataGenerator.getRandomStatus().name();
 
-		Pet updatedPet = ReusableMethods.createPetObject(categoryId, tagId, name, status);
+		Pet updatedPet = PetFactory.createPetObject(categoryId, tagId, name, status);
 		updatedPet.setId(id);
 
 		// Put:: Update pet using the PUT endpoint
@@ -149,7 +149,7 @@ public class PetTests extends BaseTest {
 	@Test(retryAnalyzer = RetryAnalyzer.class)
 	public void deletePet() {
 		 // POST: Create a new pet to be deleted
-		long id = ReusableMethods.createPetAndGetId(requestSpec, createdPetIds);
+		long id = PetFactory.createPetAndGetId(requestSpec, createdPetIds);
 
 		// DELETE: Delete the created pet using its ID
 		Response deleteResponse = PetClient.deletePetById(requestSpec, id, AuthType.NONE);
